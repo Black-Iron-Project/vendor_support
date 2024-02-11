@@ -18,6 +18,7 @@ package org.blackiron.support.preferences;
 
 import android.content.ContentResolver;
 import android.preference.PreferenceDataStore;
+import android.os.UserHandle;
 import android.provider.Settings;
 
 public class SystemSettingsStore extends androidx.preference.PreferenceDataStore
@@ -30,19 +31,19 @@ public class SystemSettingsStore extends androidx.preference.PreferenceDataStore
     }
 
     public boolean getBoolean(String key, boolean defValue) {
-        return getInt(key, defValue ? 1 : 0) != 0;
+        return Settings.System.getIntForUser(mContentResolver, key, defValue ? 1 : 0, UserHandle.USER_CURRENT) != 0;
     }
 
     public float getFloat(String key, float defValue) {
-        return Settings.System.getFloat(mContentResolver, key, defValue);
+        return Settings.System.getFloatForUser(mContentResolver, key, defValue, UserHandle.USER_CURRENT);
     }
 
     public int getInt(String key, int defValue) {
-        return Settings.System.getInt(mContentResolver, key, defValue);
+        return Settings.System.getIntForUser(mContentResolver, key, defValue, UserHandle.USER_CURRENT);
     }
 
     public long getLong(String key, long defValue) {
-        return Settings.System.getLong(mContentResolver, key, defValue);
+        return Settings.System.getLongForUser(mContentResolver, key, defValue, UserHandle.USER_CURRENT);
     }
 
     public String getString(String key, String defValue) {
@@ -55,19 +56,18 @@ public class SystemSettingsStore extends androidx.preference.PreferenceDataStore
     }
 
     public void putFloat(String key, float value) {
-        Settings.System.putFloat(mContentResolver, key, value);
+        Settings.System.putFloatForUser(mContentResolver, key, value, UserHandle.USER_CURRENT);
     }
 
     public void putInt(String key, int value) {
-        Settings.System.putInt(mContentResolver, key, value);
+        Settings.System.putIntForUser(mContentResolver, key, value, UserHandle.USER_CURRENT);
     }
 
     public void putLong(String key, long value) {
-        Settings.System.putLong(mContentResolver, key, value);
+        Settings.System.putLongForUser(mContentResolver, key, value, UserHandle.USER_CURRENT);
     }
 
     public void putString(String key, String value) {
         Settings.System.putString(mContentResolver, key, value);
     }
-
 }
